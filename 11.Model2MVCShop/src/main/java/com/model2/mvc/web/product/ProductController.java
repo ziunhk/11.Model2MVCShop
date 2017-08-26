@@ -85,8 +85,8 @@ public class ProductController {
 		System.out.println("/product/addProduct");
 		
 		//파일을 넣어줄 경로 설정
-		String filePath = "C:\\Users\\Admin\\git\\09.Model2MVCShop(jQuery)\\"
-								+ "09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles\\";
+		String filePath = "C:\\Users\\Admin\\git\\11.Model2MVCShop\\"
+								+ "11.Model2MVCShop\\WebContent\\images\\uploadFiles\\";
 	
 		//Business Logic 후 Model(data) / View(jsp) 정보를 갖는 ModelAndView 생성
 		product.setManuDate(product.getManuDate().replace("-", "")); //because of DB type or size...
@@ -154,8 +154,8 @@ public class ProductController {
 		System.out.println("/product/updateProduct");
 		
 		//수정한 파일을 넣어줄 경로 설정
-		String filePath = "C:\\Users\\Admin\\git\\09.Model2MVCShop(jQuery)\\"
-								+ "09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles\\";
+		String filePath = "C:\\Users\\Admin\\git\\11.Model2MVCShop\\"
+								+ "11.Model2MVCShop\\WebContent\\images\\uploadFiles\\";
 			
 		//Business Logic 수행
 		product.setManuDate(product.getManuDate().replace("-", "")); //because of DB type or size...
@@ -179,7 +179,7 @@ public class ProductController {
 														Model model , 
 														HttpServletRequest request) throws Exception{
 		
-		System.out.println("/product/listProduct");
+		System.out.println("/product/listProducth");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);

@@ -52,12 +52,13 @@
 	               <c:if test="${sessionScope.user.role == 'admin'}">
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >판매상품관리</span>
+		                         <span >관리자메뉴</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
 		                         <li><a href="#">판매상품등록</a></li>
 		                         <li><a href="#">판매상품관리</a></li>
+		                         <li><a href="#">판매완료상품</a></li>
 		                         <li class="divider"></li>
 		                         <li><a href="#">etc..</a></li>
 		                     </ul>
@@ -82,6 +83,7 @@
 	                         <li><a href="#">etc..</a></li>
 	                     </ul>
 	                 </li>
+	                
 	                 
 	                 <li><a href="#">etc...</a></li>
 	             </ul>
@@ -135,6 +137,12 @@
 	 	$( "a:contains('판매상품관리')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","../product/listProduct?menu=manage");
+		});
+	 	
+	 	//=============  판매완료상품 Event  처리 =============	
+	 	$( "a:contains('판매완료상품')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","../product/listSales?menu=manage");
 		});
 	 	
 	 	//=============  상 품 검 색 Event  처리 =============	
