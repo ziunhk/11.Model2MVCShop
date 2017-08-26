@@ -92,6 +92,7 @@
 </head>
 
 <!-- <body bgcolor="#ffffff" text="#000000"> -->
+<body>
 
 <!-- <form name="detailForm" method="post" enctype="multipart/form-data"> -->
 
@@ -106,7 +107,7 @@
 <!-- ////////// 화면구성 div Start ////////// -->
 <div class="container">
 	<h1 class="bg-primary text-center">상 품 등 록</h1>
-</div>
+
 
 <!-- ////////// form Start ////////// -->
 <form class="form-horizontal" method="post" name="detailForm" enctype="multipart/form-data">
@@ -116,7 +117,7 @@
 		<div class="col-sm-4">
 			<input type="text" class="form-control" id="prodName" name="prodName" placeholder="등록할 상품명을 입력하세요">
 				<span id="helpBlock" class="help-block">
-					<strong class="text-danger">상품명을 확인해주세요(사실... 필요 없으)</strong>
+					<strong class="text-danger">There is not enough time for caution.</strong>
 				</span>
 		</div>
 	</div>
@@ -130,16 +131,16 @@
 	
 	<div class="form-group">
 		<label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
-		<div class="col-sm-4">
-			<input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="제조일자입력">
-			&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" 
-										onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="제조일자입력" readonly>
+				<img src="../images/ct_icon_date.gif" width="20" height="20" 
+									onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
 		</div>
 	</div>
 	
 	<div class="form-group">
 		<label for="price" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 			<input type="text" class="form-control" id="price" name="price" placeholder="가격입력">
 		</div>
 		<div class="col-sm-1">
@@ -162,6 +163,8 @@
 	</div>
 	
 </form>
+
+</div>
 
 </body>
 </html>

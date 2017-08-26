@@ -54,9 +54,9 @@
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 //$( "button.btn.btn-default" ).on("click" , function() {
-			//	fncGetUserList(1);
-			//});
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				fncGetUserList(1);
+			});
 		 });
 		
 		
@@ -167,7 +167,7 @@
 	    	</div>
 	    	
 		</div>
-		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+		<!-- table 위쪽 검색 End /////////////////////////////////////-->
 		
 		
       <!--  table Start /////////////////////////////////////-->
@@ -175,7 +175,7 @@
       
         <thead>
           <tr>
-            <th align="center">No</th>
+            <th align="center">NO</th>
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
             <th align="left">이메일</th>
