@@ -127,7 +127,7 @@
 	<div class="container">
 		
 		<div class="page-header text-info">
-			<h3>개인구매이력조회</h3>
+			<h3>판매완료상품</h3>
 		</div>
 		
 		<!--  table 위쪽 검색 Start -->
@@ -173,7 +173,9 @@
 				<tr>
 					<th align="center">NO</th>
 					<th align="left">구매번호</th>
-					<th align="left">상 품 명</th>
+					<th align="left">상품명</th>
+					<th align="left">회원ID</th>
+					<th align="left">구매자명</th>
 					<th align="left">전화번호</th>
 					<th align="left">배송현황</th>
 				</tr>
@@ -191,11 +193,17 @@
 								<span style="display: none" class="hidden_link">/purchase/getPurchase?tranNo=${purchase.tranNo }</span>
 							</td>
 							<td align="left">
-								${purchase.tranNo}
+								${purchase.tranNo }
 							</td>
 							<td align="left">
-								${purchase.purchaseProd.prodName}
+								${purchase.purchaseProd.prodName }
+							</td>
+							<td align="left">
+								${purchase.buyer.userId}
 								<span style="display: none" class="hidden_link">/user/getUser?userId=${purchase.buyer.userId }&menu=${param.menu }</span>
+							</td>
+							<td align="left">
+								${purchase.receiverName}
 							</td>
 							<td align="left">
 								${purchase.receiverPhone}

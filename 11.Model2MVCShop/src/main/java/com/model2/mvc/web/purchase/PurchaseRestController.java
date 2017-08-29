@@ -2,6 +2,8 @@ package com.model2.mvc.web.purchase;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -112,7 +114,7 @@ public class PurchaseRestController {
 	
 	
 	@RequestMapping(value ="json/listPurchase", method = RequestMethod.POST)
-	public Map listPurchase(@RequestBody Search search) throws Exception{
+	public Map listPurchase(@RequestBody Search search, @RequestBody String buyerId) throws Exception{
 				
 		System.out.println("/purchase/listPurchase");
 		
@@ -122,8 +124,32 @@ public class PurchaseRestController {
 		search.setPageSize(pageSize);
 		
 		//Business Logic
-		Map<String, Object> map = purchaseService.getPurchaseList(search);
+		Map<String, Object> map = purchaseService.getPurchaseList(search, buyerId);
 		System.out.println("listPurchase map :: "+map);
+		//resultpage를 map에 넣어주면...
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		//map.put("resultPage", resultPage);
+		System.out.println("\n\n\nlistPurchase resultPage :: \n"+resultPage+"\n\n\n");
+		System.out.println("\n\n\nlistPurchase map :: \n"+map.toString()+"\n\n\n");
+		
+		return map;
+		
+	}
+	
+	
+	@RequestMapping(value ="json/listSale", method = RequestMethod.POST)
+	public Map listSale(@RequestBody Search search) throws Exception{
+				
+		System.out.println("/purchase/listSale");
+		
+		if(search.getCurrentPage() == 0){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		//Business Logic
+		Map<String, Object> map = purchaseService.getSaleList(search);
+		System.out.println("listSale map :: "+map);
 		//resultpage를 map에 넣어주면...
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		//map.put("resultPage", resultPage);

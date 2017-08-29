@@ -81,9 +81,8 @@ public class Page {
 	}
 	@Override
 	public String toString() {
-		return "Page [currentPage=" + currentPage + ", totalCount="
-				+ totalCount + ", pageUnit=" + pageUnit + ", pageSize="
-				+ pageSize + ", maxPage=" + maxPage + ", beginUnitPage="
-				+ beginUnitPage + ", endUnitPage=" + endUnitPage + "]";
+		return "\nPage [currentPage=" + currentPage + ", totalCount=" + totalCount 
+				+ "\n, pageUnit=" + pageUnit + ", pageSize=" + pageSize 
+				+ "\n, maxPage=" + maxPage + ", beginUnitPage=" + beginUnitPage + ", endUnitPage=" + endUnitPage + "]";
 	}
 }

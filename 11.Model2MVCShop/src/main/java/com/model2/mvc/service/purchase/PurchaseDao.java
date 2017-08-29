@@ -26,12 +26,19 @@ public interface PurchaseDao {
 	public void updateTranCode(Purchase purchase) throws Exception;
 
 	// 구매 item 목록 
-	public List<Purchase> getPurchaseList(Search search) throws Exception;
+	public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception;
 	
-	// 게시판 처리
+	// only for admin
+	public List<Purchase> getSaleList(Search search) throws Exception;
+
+	// 말그대로 목록 개수 받는 method
 	public int getTotalCount(Search search) throws Exception;
 	
-	// 이건뭐야 : 혹시모르니...
-	public Map<String, Object> getSaleList(Search search) throws Exception;
-		
+//	public default void test(int testData) {
+//		
+//	}
+//	
+//	public static void test2(int testData) {
+//		
+//	}
 }
