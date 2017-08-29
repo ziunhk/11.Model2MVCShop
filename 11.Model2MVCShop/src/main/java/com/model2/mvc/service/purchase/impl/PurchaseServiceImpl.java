@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Purchase;
+import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.purchase.PurchaseDao;
 import com.model2.mvc.service.purchase.PurchaseService;
 
@@ -50,22 +53,27 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchaseDao.updateTranCode(purchase);
 	}
 
-	public Map<String, Object> getPurchaseList(Search search) throws Exception {
+	public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
 		
-		List<Purchase> list = purchaseDao.getPurchaseList(search); // purchase 객체를 element로 받는 list 생성
+		Map<String, Object> map = purchaseDao.getPurchaseList(search, buyerId); // purchase 객체를 element로 받는 list 생성
 		int totalCount = purchaseDao.getTotalCount(search); // totalCount는 getTotalCount method를 이용하여 return 된 값을 대입
 		
-		Map<String, Object> map = new HashMap<String, Object>(); //HashMap
-		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
+		map.put("buyerId", buyerId);
 		
 		return map;
 	}
 	
-	//....필요한가요?
 	public Map<String, Object> getSaleList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Purchase> list = purchaseDao.getSaleList(search);
+		int totalCount = purchaseDao.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
 	}
 
 }

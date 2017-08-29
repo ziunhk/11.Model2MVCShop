@@ -73,6 +73,7 @@
    		<div class="row">
    			<div class="col-xs-4 col-md-2"><strong>구매자아이디</strong></div>
    			<div class="col-xs-8 col-md-4">${purchase.buyer.userId }</div>
+   			<input type="hidden" name="buyerId" value="${sessionScope.user.userId }"/>
    		</div>
    		
    		<hr/>

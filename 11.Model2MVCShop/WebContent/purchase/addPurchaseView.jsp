@@ -146,7 +146,7 @@
 			<label for="userId" class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
 			<div class="col-sm-4">
 				<input type="text" class="form-control" id="userId" name="userId" value="${user.userId }" readonly="readonly">
-				<input type="hidden" name="buyerId" value="${user.userId }"/>
+				<input type="hidden" name="buyerId" value="${sessionScope.user.userId }"/>
 			</div>
 		</div>
 		

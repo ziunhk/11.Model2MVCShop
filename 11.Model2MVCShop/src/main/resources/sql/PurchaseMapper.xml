@@ -81,7 +81,7 @@
 			order_data, 
 			dlvy_date 
 		FROM transaction 
-			WHERE tran_no = #{tranNo}
+			WHERE tran_no = #{tranNo:INTEGER}
 	</select>
 	
 	
@@ -99,7 +99,7 @@
 			order_data, 
 			dlvy_date 
 		FROM transaction 
-			WHERE prod_no = #{prodNo}
+			WHERE prod_no = #{prodNo:INTEGER}
 	</select>
 	
 	
@@ -131,11 +131,79 @@
 	</delete>
 	
 	
-	<select  id="getPurchaseList"  parameterType="search"	resultMap="purchaseSelectMap">
+	<!-- getPurchaseList에서 buyerId가 필요 자신의 id로 구매한 것만 출력  -->
+	<!-- <![CDATA[<=]]> 의 의미는 CDATA 안의  '<='를 그냥 있는 그대로 받아들이는 것  -->
+	<select id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq 
+  						FROM ( SELECT 
+  									t.tran_no, 
+  									p.prod_no, 
+  									t.order_data, 
+  									t.receiver_phone, 
+  									t.tran_status_code 
+									FROM transaction t, product p 
+									WHERE t.prod_no = p.prod_no 
+									AND t.buyer_id = #{buyerId} 
+									ORDER BY tran_no  ) inner_table 
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	
+	 <!-- only for 'admin' menu -->
+	<select  id="getSaleList"  parameterType="search"	resultMap="purchaseSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 
-											FROM transaction
+	  					FROM		(	SELECT 
+	  										t.tran_no, 
+	  										t.prod_no, 
+	  										p.prod_name, 
+	  										t.buyer_id, 
+	  										t.payment_option, 
+	  										t.receiver_name, 
+	  										t.receiver_phone, 
+	  										t.demailaddr, 
+	  										t.dlvy_request, 
+	  										t.tran_status_code, 
+	  										t.order_data, 
+	  										t.dlvy_date 
+											FROM transaction t, product p 
+											WHERE t.prod_no = p.prod_no 
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				AND t.tran_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				AND t.prod_no = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY t.tran_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 
+	 <!-- only for 'admin' menu
+	<select  id="getSaleList"  parameterType="search"	resultMap="purchaseSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT 
+	  										tran_no, 
+	  										prod_no, 
+	  										buyer_id, 
+	  										payment_option, 
+	  										receiver_name, 
+	  										receiver_phone, 
+	  										demailaddr, 
+	  										dlvy_request, 
+	  										tran_status_code, 
+	  										order_data, 
+	  										dlvy_date 
+											FROM transaction 
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
@@ -149,14 +217,26 @@
 											ORDER BY tran_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
+	 </select> -->
 	 
-	 
-	 <!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT tran_no , prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date
-						FROM transaction
+	 <!-- 유저의 경우 ->  select * from where userId like '{userId}'  -->
+	 <!-- 관리자의 경우 ->  select * from where userId like '%'  -->
+	 <!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*) 
+	  	FROM(	SELECT 
+		  				tran_no , 
+		  				prod_no, 
+		  				buyer_id, 
+		  				payment_option, 
+		  				receiver_name, 
+		  				receiver_phone, 
+		  				demailaddr, 
+		  				dlvy_request, 
+		  				tran_status_code, 
+		  				order_data, 
+		  				dlvy_date
+						FROM transaction 
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
@@ -167,6 +247,6 @@
 								</if>
 							</where>
 						</if> ) countTable	
-	 </select>
+	</select>
 	
 </mapper>
