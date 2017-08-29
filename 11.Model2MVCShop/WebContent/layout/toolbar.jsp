@@ -73,11 +73,7 @@
 	                     </a>
 	                     <ul class="dropdown-menu">
 	                         <li><a href="#">상 품 검 색</a></li>
-	                         
-	                         <c:if test="${sessionScope.user.role == 'user'}">
-	                           <li><a href="#">구매이력조회</a></li>
-	                         </c:if>
-	                         
+	                         <li><a href="#">구매이력조회</a></li>
 	                         <li><a href="#">최근본상품</a></li>
 	                         <li class="divider"></li>
 	                         <li><a href="#">etc..</a></li>
@@ -142,7 +138,7 @@
 	 	//=============  판매완료상품 Event  처리 =============	
 	 	$( "a:contains('판매완료상품')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$(self.location).attr("href","../product/listSales?menu=manage");
+			$(self.location).attr("href","../purchase/listSale");
 		});
 	 	
 	 	//=============  상 품 검 색 Event  처리 =============	

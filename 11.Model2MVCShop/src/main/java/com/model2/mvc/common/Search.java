@@ -60,9 +60,8 @@ public class Search {
 
 	@Override
 	public String toString() {
-		return "Search [currentPage=" + currentPage + ", searchCondition="
-				+ searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + "]";
+		return "\nSearch [currentPage=" + currentPage + ", searchCondition=" + searchCondition 
+				+ "\n, searchKeyword=" + searchKeyword + ", pageSize=" + pageSize 
+				+ "\n, endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + "]";
 	}
 }

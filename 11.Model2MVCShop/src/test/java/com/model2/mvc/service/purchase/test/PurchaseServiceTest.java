@@ -3,6 +3,8 @@ package com.model2.mvc.service.purchase.test;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -145,12 +147,13 @@ public class PurchaseServiceTest {
 	}
 
 	//@Test
-	public void testGetPurchaseListAll() throws Exception {
+	public void testGetPurchaseListAll(HttpSession session) throws Exception {
 
 		Search search = new Search();
 		search.setCurrentPage(1);
 		search.setPageSize(3);
-		Map<String, Object> map = purchaseService.getPurchaseList(search);
+		String buyerId = ((User)session.getAttribute("user")).getUserId();
+		Map<String, Object> map = purchaseService.getPurchaseList(search, buyerId);
 
 		List<Object> list = (List<Object>) map.get("list");
 		Assert.assertEquals(3, list.size());
@@ -167,7 +170,7 @@ public class PurchaseServiceTest {
 		search.setPageSize(3);
 		search.setSearchCondition("0");
 		search.setSearchKeyword("");
-		map = purchaseService.getPurchaseList(search);
+		map = purchaseService.getPurchaseList(search, buyerId);
 
 		list = (List<Object>) map.get("list");
 		System.out.println("list :: " + list);
@@ -189,7 +192,7 @@ public class PurchaseServiceTest {
 		search.setPageSize(3);
 		search.setSearchCondition("0");
 		search.setSearchKeyword("admin");
-		Map<String, Object> map = purchaseService.getPurchaseList(search);
+		Map<String, Object> map = purchaseService.getPurchaseList(search, "admin");
 
 		List<Object> list = (List<Object>) map.get("list");
 		Assert.assertEquals(1, list.size());
@@ -204,7 +207,7 @@ public class PurchaseServiceTest {
 
 		search.setSearchCondition("0");
 		search.setSearchKeyword("" + System.currentTimeMillis());
-		map = purchaseService.getPurchaseList(search);
+		map = purchaseService.getPurchaseList(search, "admin");
 
 		list = (List<Object>) map.get("list");
 		Assert.assertEquals(0, list.size());
@@ -217,14 +220,16 @@ public class PurchaseServiceTest {
 	}
 
 	// @Test
-	public void testGetPurchaseListByProductName() throws Exception {
+	public void testGetPurchaseListByProductName(HttpSession session) throws Exception {
 
+		
 		Search search = new Search();
 		search.setCurrentPage(1);
 		search.setPageSize(3);
 		search.setSearchCondition("1");
 		search.setSearchKeyword("SCOTT");
-		Map<String, Object> map = purchaseService.getPurchaseList(search);
+		String buyerId = ((User)(session.getAttribute("user"))).getUserId();
+		Map<String, Object> map = purchaseService.getPurchaseList(search, buyerId);
 
 		List<Object> list = (List<Object>) map.get("list");
 		Assert.assertEquals(3, list.size());
@@ -239,7 +244,7 @@ public class PurchaseServiceTest {
 
 		search.setSearchCondition("1");
 		search.setSearchKeyword("" + System.currentTimeMillis());
-		map = purchaseService.getPurchaseList(search);
+		map = purchaseService.getPurchaseList(search, buyerId);
 
 		list = (List<Object>) map.get("list");
 		Assert.assertEquals(0, list.size());

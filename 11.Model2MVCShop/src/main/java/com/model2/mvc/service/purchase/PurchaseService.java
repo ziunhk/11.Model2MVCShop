@@ -2,6 +2,8 @@ package com.model2.mvc.service.purchase;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Purchase;
 
@@ -27,9 +29,9 @@ public interface PurchaseService {
 	public void updateTranCode(Purchase purchase) throws Exception;
 	
 	// 구매 item 목록
-	public Map<String,Object> getPurchaseList(Search search) throws Exception;
+	public Map<String,Object> getPurchaseList(Search search, String buyerId) throws Exception;
 	
-	// 이건 나도 모르겠다.
+	// 판매완료된 item 목록 : only for 'admin'
 	public Map<String,Object> getSaleList(Search search) throws Exception;
 	
 	

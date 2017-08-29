@@ -3,6 +3,7 @@ package com.model2.mvc.web.purchase;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -179,9 +181,13 @@ public class PurchaseController {
 	
 	//@RequestMapping("/listPurchase.do")
 	@RequestMapping(value="listPurchase")
-	public String listPurchase( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listPurchase( @ModelAttribute("search") Search search, 
+												Model model , 
+												HttpServletRequest request, 
+												HttpSession session) throws Exception{
 		
 		System.out.println("/purchase/listPurchase");
+		
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -189,7 +195,10 @@ public class PurchaseController {
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
-		Map<String , Object> map=purchaseService.getPurchaseList(search);
+		User buyer = (User)(session.getAttribute("user"));
+		String buyerId = buyer.getUserId();
+		
+		Map<String , Object> map=purchaseService.getPurchaseList(search, buyerId);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
@@ -198,8 +207,38 @@ public class PurchaseController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("buyerId", buyerId);
 		
 		return "forward:/purchase/listPurchase.jsp";
 	}
+	
+	//@RequestMapping("/listSale.do")
+		@RequestMapping(value="listSale")
+		public String listSale( @ModelAttribute("search") Search search, 
+													Model model , 
+													HttpServletRequest request) throws Exception{
+			
+			System.out.println("/purchase/listSale");
+			
+			
+			if(search.getCurrentPage() ==0 ){
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(pageSize);
+			
+			// Business logic 수행
+			
+			Map<String , Object> map=purchaseService.getSaleList(search);
+			
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);
+			
+			// Model 과 View 연결
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			return "forward:/purchase/listSale.jsp";
+		}
 	
 }
